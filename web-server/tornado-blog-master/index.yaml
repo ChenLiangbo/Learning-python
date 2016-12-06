@@ -1,0 +1,14 @@
+indexes:
+
+- kind: Entry
+  properties:
+  - name: hidden
+  - name: published
+    direction: desc
+
+- kind: Entry
+  properties:
+  - name: hidden
+  - name: tags
+  - name: published
+    direction: desc

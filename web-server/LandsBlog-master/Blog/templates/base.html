@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="baidu-site-verification" content="qKDa7c2d3Y" />
+	{% block title %}
+	<meta name="keywords" content="清心,Django教程,Django基础教程,Django中文文档,Django开发实例,Python开发,爬虫,蘭兹的博客,RSS订阅">
+	<meta name="description" content="Django基础教程，提供快速学习Django的交流平台，让更多人了解Django，使用Django！">
+	<title>清心-Lands&Blog </title>
+	{% endblock%}
+	<link rel="stylesheet" href="/static/css/reset.css" type="text/css" media="screen" />
+	
+	<!--[if ! lte IE 6]><!-->
+	<link rel="stylesheet" href="/static/css/style.css" type="text/css" media="screen" />
+	<!--<![endif]-->
+
+	<!--[if gt IE 6]>
+	<link rel="stylesheet" href="/static/css/ie.css" type="text/css" media="screen" />
+	<![endif]-->
+	
+	<!--[if IE 7]>
+	<link rel="stylesheet" href="/static/css/ie7.css" type="text/css" media="screen" />
+	<![endif]-->
+
+	<!--[if lte IE 6]>
+	<link rel="stylesheet" href="http://universal-ie6-css.googlecode.com/files/ie6.1.1.css" media="screen, projection">
+	<![endif]-->
+	
+	<link rel="stylesheet" href="/static/css/fancybox.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/static/css/monokai.css" type="text/css">
+</head>
+<body>
+
+<div id="nav">
+
+	<div class="container">
+	<ul class="logo-ul">
+	<li>
+	<img src="/upload/logo.png" width="60px">
+	<a href="/" class="logo"><b>Lands</b> & Blog</a>
+	</li>
+	</ul>
+
+		<ul>
+		{% for nav in nav_list %}
+			<li><a href="{{ nav.url }}">{{ nav.name }}</a></li>
+		{% endfor %}
+		</ul>
+	
+
+	</div><!-- end .container -->
+
+</div><!-- end #nav -->
+
+{% block page-content %}
+{% endblock %}
+
+
+<div id="footer">
+
+	<div class="container clearfix">
+		<p>Copyright © 2015-2016 Powered by Lands&Blog All Rights Reserved. 晋ICP备16006695号</p>
+		<p>本站由Django技术开发，托管在阿里云服务器上</p>
+	</div><!-- end .container -->
+
+</div><!-- end #footer -->
+
+
+
+<!-- start scripts -->
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/jquery.cycle.all.min.js"></script>
+<script src="/static/js/jquery.easing.1.3.js"></script>
+<script src="/static/js/organictabs.jquery.js"></script>
+<script src="/static/js/jquery.fancybox-1.3.4.pack.js"></script>
+<script src="/static/js/css3-mediaqueries.js"></script>
+<script src="/static/js/custom.js"></script>
+<!-- Highlight -->
+<script src="/static/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"landsblog"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+<!-- 百度统计JS代码 -->
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e3fa448570abea355260edfd78a9850a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- 百度统计JS代码 end -->
+<!-- 友盟统计JS代码 -->
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1259996603'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1259996603%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+<!-- 友盟统计JS代码end -->
+<!-- 统计在线人数 -->
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1259996603'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1259996603%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+<!-- 统计在线人数end -->
+<!-- 百度推送代码 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<!-- 百度推送代码end -->
+<!--[if IE]> <script src="js/selectivizr.js"></script> <![endif]-->
+<!-- end scripts -->
+</body>
+</html>

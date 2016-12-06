@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% load comments %}
+
+		{% block page-content %}
+		
+<div id="nav-shadow"></div>
+		<!-- 左侧栏 -->
+		<div id="content">
+
+	<div class="container">
+
+		<div id="main">
+		
+			<div class="sites box">
+
+				<div class="box-header">
+
+					<h6>推荐站点</h6>
+
+				</div><!-- end .box-header -->
+
+				<ul>
+					{% for category in category_list %}
+					{% if category_name.slug = category.slug %}
+						<li><a href="/artical/{{ category.slug }}" class="category-active">{{ category.label }}</a></li>
+					{% else %}
+						<li><a href="/artical/{{ category.slug }}">{{ category.label }}</a></li>
+					{% endif %}
+					{% endfor%}
+				</ul>
+
+			</div><!-- end .sites -->
+			
+			
+			{% for artical in artical_list %}
+			<div class="entry">
+
+				<div class="entry-header">
+
+					<h2 class="title"><a href="{{ artical.get_absolute_url }}">{{ artical.title }}</a></h2>
+
+					<p class="meta">发布于 {{ artical.created|timesince}} ago </p>
+
+				</div><!-- end .entry-header -->
+
+				<div class="entry-content">
+
+					<a href="{{ artical.get_absolute_url }}"><img src="{{ artical.img.url }}" width="240" height="140" alt="" class="entry-image" /></a>
+					<p class="blog-meta">{{ artical.created|date:"m-d h:i"}} <span class="meta-span"></span>阅读 ({{ artical.read_times }}) <span class="meta-span"></span> 评论 (<span class="ds-thread-count" data-thread-key="{{ artical.slug }}" data-count-type="comments" ></span>) </p>
+					<p>{{artical.summary }}</p>
+					<div class="read-more cl-effect-14">
+							<a href={{ artical.get_absolute_url }} class="more-link">Continue reading</a>
+					</div>
+
+					<hr />
+					<ul class="entry-links">
+					{% for tag in artical.tags.select_related %}
+						<li><a href="/tag/{{ tag.slug }}">{{ tag }}</a></li>
+					{% endfor %}
+					</ul>
+					
+				</div><!-- end .entry-content -->
+
+			</div><!-- end .entry -->
+			{% endfor %}
+			
+			
+			
+			<ul class="pagination">
+			{% if artical_list.has_previous %}
+				<li class="prev"><a href="/artical/{{ category_name.slug }}/{{ artical_list.previous_page_number }}">< Prev</a></li>
+			{% else %}
+				<li class="prev"><a href="#">< Prev</a></li>
+			{% endif %}
+			
+			{% for page_number in artical_list.paginator.page_range %}
+				{% if page_number = artical_list.number %}
+				<li class="active"><a href="">{{ page_number }}</a></li>
+				{% else %}
+				<li><a href="/artical/{{ category_name.slug }}/{{ page_number }}">{{ page_number }}</a></li>
+				{% endif %}
+			{% endfor %}
+			{% if artical_list.has_next %}
+				<li class="next"><a href="/artical/{{ category_name.slug }}/{{ artical_list.next_page_number }}">Next ></a></li>
+			{% else %}
+				<li class="next"><a href="#">Next ></a></li>
+			{% endif %}
+			</ul>
+
+		</div><!-- end #main -->
+
+		<div id="sidebar">
+		
+
+			
+			<div id="recent-tabs" class="box">
+			
+				<div class="box-header">
+
+					<ul class="nav">
+						<li><a class="current" href="#recent-tabs-posts">每日热评</a></li>
+						<li><a href="#recent-tabs-comments">推荐文章</a></li>
+					</ul>
+
+				</div><!-- end .box-header -->
+
+				<div class="list-wrap">
+
+					<ul id="recent-tabs-posts">
+					{% for daily_comment in daily_comment_list %}
+						<li>
+							<a href="{{ daily_comment.get_absolute_url }}" class="title">
+								<img src="{{ daily_comment.img.url }}" width="100" height="60" alt="{{ daily_comment.title }}" />
+								{{ daily_comment.title }}
+							</a>
+							<p class="meta">发布于 <a href="#">{{ daily_comment.created|date:"m-d h:i"}}</a> by <a href="#">{{ daily_comment.owner }}</a></p>
+						</li>
+					{% endfor %}
+
+					</ul><!-- end #recent-tabs-posts-->
+
+					<ul id="recent-tabs-comments" class="hide">
+					{% for popular in popular_list %}
+						<li>
+							<a href="{{ popular.get_absolute_url }}" class="title">
+								<img src="{{ popular.img.url }}" width="100" height="60" alt="{{ popular.title }}" />
+								{{ popular.title }}
+							</a>
+							<p class="meta">发布于 <a href="#">{{ popular.created|date:"m-d h:i"}}</a> by <a href="#">{{ popular.owner }}</a></p>
+						</li>
+					{% endfor %}
+						
+					</ul><!-- end #recent-tabs-comments -->
+
+				</div><!-- end .list-wrap -->
+				
+			</div><!-- end #recent-tabs -->
+
+
+			<div class="tags box">
+
+				<div class="box-header">
+
+					<h6>热门标签</h6>
+
+				</div><!-- end .box-header -->
+
+				<ul>
+				{% for tag in tag_list %}
+					<li><a href="/tag/{{ tag.slug }}">{{ tag.label }}</a></li>
+				{% endfor%}
+				</ul>
+
+			</div><!-- end .tags -->
+
+
+		</div><!-- end #sidebar -->
+
+		<div class="clear"></div>
+
+	</div><!-- end .container -->
+
+</div><!-- end #content -->
+		{% endblock %}

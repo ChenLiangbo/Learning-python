@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:fb="https://www.facebook.com/2008/fbml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+    <meta name="verify-v1" content="PewSSzFH6scpEjdLjwzFShlRf6p1U0TavfOMx2+aXYM=" />
+    <meta property="fb:app_id" content="{{ handler.settings.get("fb_app_id", "") }}"/>
+    <meta property="fb:admins" content="{{ handler.settings.get("fb_admins", "") }}"/>
+    <title>{% block title %}{{ escape(handler.settings["blog_title"]) }}{% end %}</title>
+    <link rel="stylesheet" href="/static/css/base.css" type="text/css"/>
+    <link rel="shortcut icon" href="/static/images/favicon.png" type="image/png"/>
+    <link rel="alternate" href="/?format=atom" type="application/atom+xml" title="{{ escape(handler.settings["blog_title"]) }}"/>
+    {% block head %}{% end %}
+    {% if not handler.settings.get("debug") %}
+      <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-1337900-1']);
+        _gaq.push(['_trackPageview']);
+        _gaq.push(['_trackPageLoadTime']);
+
+        (function() {
+          var ga = document.createElement('script');
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          ga.setAttribute('async', 'true');
+          document.documentElement.firstChild.appendChild(ga);
+        })();
+
+      </script>
+    {% end %}
+  </head>
+  <body>
+    {% if handler.settings.get("fb_app_id") %}
+      <div id="fb-root"></div>
+      <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId={{ handler.settings.get("fb_app_id", "") }}";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));</script>
+    {% end %}
+    <table id="body">
+      <tr>
+        <td id="content">
+          {% block content %}{% end %}
+        </td>
+        <td id="sidebar">
+          <div class="box">
+            <h3>{{ _("Links") }}</h3>
+            <ul>
+              <li><a href="/about">{{ _("About") }}</a></li>
+              <li><a href="/archive">{{ _("Archive") }}</a></li>
+              <li><a href="/">{{ _("Home") }}</a></li>
+            </ul>
+          </div>
+          <div class="box elsewhere">
+            <h3>{{ _("Elsewhere") }}</h3>
+            <ul>
+              <li><a rel="me" class="email" href="mailto:benjamin.golub@gmail.com">{{ _("Email") }}</a></li>
+              <li><a rel="me" class="facebook" href="http://facebook.com/bgolub">{{ _("Facebook") }}</a></li>
+              <li><a rel="me" class="flickr" href="http://www.flickr.com/photos/benjamingolub/">Flickr</a></li>
+              <li><a rel="me" class="friendfeed" href="http://friendfeed.com/bgolub">{{ _("FriendFeed") }}</a></li>
+              <li><a rel="me" class="twitter" href="http://twitter.com/bgolub">{{ _("Twitter") }}</a></li>
+            </ul>
+          </div>
+          {{ modules.RecentEntries() }}
+          <div class="box small">
+            The opinions expressed on this site are mine and do not
+            necessarily represent those of my
+            <a href="http://www.facebook.com/">employer</a>. You won't find any
+            confidential company information here, and while you're welcome
+            to
+            <a href="mailto:benjamin.golub@gmail.com">get in touch with me</a>,
+            I'm afraid I can't put you in contact with my employer.
+          </div>
+          <div class="box small">
+            &copy;{{ datetime.datetime.utcnow().year }} {{ escape(handler.settings["blog_author"]) }}
+          </div>
+          <div class="box small">
+              <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons license</a>
+              -
+              <a href="http://github.com/bgolub/tornado-blog">Source</a>
+          </div>
+          <div class="box small">
+            <ul>
+              {% if current_user %}
+                {% if current_user.administrator %}
+                  <li>
+                    <a href="/compose">{{ _("Compose") }}</a>
+                  </li>
+                {% end %}
+                    <li>
+                      <a href="{{ users.create_logout_url(request.uri) }}">{{ _("Sign out") }}</a>
+                    <li>
+              {% else %}
+                <li>
+                  <a href="{{ users.create_login_url(request.uri) }}">{{ _("Sign in") }}</a>
+                </li>
+              {% end %}
+            </ul>
+          </div>
+        </td>
+      </tr>
+    </table>
+    {% block bottom %}{% end %}
+  </body>
+</html>

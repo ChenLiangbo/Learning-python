@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% load custom_markdown %}
+{% load comments %}
+		{% block page-content %}
+		<!-- 左侧栏 -->
+<div id="nav-shadow"></div>
+		<!-- 左侧栏 -->
+		<div id="content">
+
+	<div class="container">
+
+		<div id="main">
+			
+			
+			<div class="entry-artical">
+
+				<div class="entry-artical-header">
+
+					<h2 class="title"><a href="{{ artical.get_absolute_url }}">{{ artical.title }}</a></h2>
+
+					<p class="meta">
+					<span class="entry-separator"><a href="/artical/{{ artical.category.slug }}"> {{ artical.category}} </a></span>
+					<span class="entry-separator"> {{ artical.created|date:"m-d h:i"}} </span> 
+					<span class="entry-separator">阅读 ({{ artical.read_times}})</span>
+					{% get_comment_count for artical as artical_count %}
+					<span class="entry-separator">评论 ({{ artical_count }})</span>
+					</p>
+
+				</div><!-- end .entry-header -->
+				
+				<div class="entry-tag">
+				<ul>
+					{% for tag in artical.tags.select_related %}
+						<a href="/tag/{{ tag.slug }}">{{ tag }}</a>
+					{% endfor %}
+				</ul>
+				</div>
+
+				<div class="entry-artical-content">
+
+					<p>{{artical.html_content|custom_markdown|removetags:"a span div"}}</p>
+
+
+					<hr />
+					
+					
+				</div><!-- end .entry-content -->
+				
+				<h1 class="page-title">Comments</h1>
+				<article class="sub_comment">
+						<div class="entry-comment-content">
+							<form action="/comment/" method="post" class="contact-form">
+									<div class="row">
+										<div class="content-left">
+											<input type="hidden" name="artical_id" value="{{artical.id}}" />
+											<input type="hidden" name="artical_slug" value="{{artical.slug}}" />
+											<input type="text" name="artical_name" placeholder="Name" required="">
+											<textarea name="comment_content" rows="7" placeholder="Your Comment" required=""></textarea>
+											<button class="entry-comment-but"><span>Submit</span></button>
+										</div>
+									</div>	<!-- row -->
+							</form>
+						</div>
+				</article>
+				
+				<h1 class="page-title">Recent Comments</h1>
+				<div class="comment-editor">
+				{% get_comment_list for artical as artical_comment_list %}
+				{% for comment in artical_comment_list %}
+				<img src="/upload/user/default_user.jpg" width="60px" height="60px" >
+					<h5>
+					<strong>{{ comment.name }}</strong>发表于{{ comment.submit_date|timesince }} ago
+					</h5>
+						<p>{{ comment.comment }}<p>
+					<hr>
+				{%endfor %}
+				</div>
+
+			</div><!-- end .entry -->
+
+
+		</div><!-- end #main -->
+
+		<div id="sidebar">
+		
+
+			
+			<div id="recent-tabs" class="box">
+			
+				<div class="box-header">
+
+					<ul class="nav">
+						<li><a class="current" href="#recent-tabs-posts">每日热评</a></li>
+						<li><a href="#recent-tabs-comments">推荐文章</a></li>
+					</ul>
+
+				</div><!-- end .box-header -->
+
+				<div class="list-wrap">
+
+					<ul id="recent-tabs-posts">
+					{% for daily_comment in daily_comment_list %}
+						<li>
+							<a href="{{ daily_comment.get_absolute_url }}" class="title">
+								<img src="{{ daily_comment.img.url }}" width="100" height="60" alt="{{ daily_comment.title }}" />
+								{{ daily_comment.title }}
+							</a>
+							<p class="meta">发布于 <a href="#">{{ daily_comment.created|date:"m-d h:i"}}</a> by <a href="#">{{ daily_comment.owner }}</a></p>
+						</li>
+					{% endfor %}
+
+					</ul><!-- end #recent-tabs-posts-->
+
+					<ul id="recent-tabs-comments" class="hide">
+					{% for popular in popular_list %}
+						<li>
+							<a href="{{ popular.get_absolute_url }}" class="title">
+								<img src="{{ popular.img.url }}" width="100" height="60" alt="{{ popular.title }}" />
+								{{ popular.title }}
+							</a>
+							<p class="meta">发布于 <a href="#">{{ popular.created|date:"m-d h:i"}}</a> by <a href="#">{{ popular.owner }}</a></p>
+						</li>
+					{% endfor %}
+						
+					</ul><!-- end #recent-tabs-comments -->
+
+				</div><!-- end .list-wrap -->
+				
+			</div><!-- end #recent-tabs -->
+
+
+			<div class="tags box">
+
+				<div class="box-header">
+
+					<h6>热门标签</h6>
+
+				</div><!-- end .box-header -->
+
+				<ul>
+				{% for tag in tag_list %}
+					<li><a href="/tag/{{ tag.slug }}">{{ tag.label }}</a></li>
+				{% endfor%}
+				</ul>
+
+			</div><!-- end .tags -->
+
+
+		</div><!-- end #sidebar -->
+
+		<div class="clear"></div>
+
+	</div><!-- end .container -->
+
+</div><!-- end #content -->
+		{% endblock %}
