@@ -1,0 +1,10 @@
+<decno>1</decno>
+<text>一直很喜欢来这里吃饭～～最喜欢这里各种大虾！好吃</text>
+<decno>2</decno>
+<text>很好很好吃，孩子们都爱吃也挺实惠的</text>
+<decno>3</decno>
+<text>每次去火宴山都是吃番茄锅配着大虾，蛋挞也不错，</text>
+<decno>4</decno>
+<text>各种水果都还行，只不过羊肉串每次都吃不上，限量的是吗</text>
+<decno>5</decno>
+<text>感觉很好，去吃过好几次了，在自助餐中算是不错点完</text>
