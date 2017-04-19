@@ -5,11 +5,13 @@ from scrapy import Spider
 from scrapy import Request
 from scrapy.selector import HtmlXPathSelector
 from scrapy.selector import Selector
+from scrapy.spiders import CrawlSpider, Rule
+from scrapy.linkextractors import LinkExtractor
 import os
 import json
 from bs4 import BeautifulSoup
 import urllib
-
+import csv
 
 
 class TestSpider(Spider):
@@ -35,30 +37,30 @@ class TestSpider(Spider):
         pass
 
 
-from scrapy.spiders import CrawlSpider, Rule
-from scrapy.linkextractors import LinkExtractor
+
  
-class LianjiaSpider(CrawlSpider):
-    name = "lianjia"
+class QzoneSpider(CrawlSpider):
+
+    name = "qzone"
  
-    allowed_domains = ["lianjia.com"]
+    allowed_domains = ["qzone.qq.com"]
+
+    # qq = '1873846630'
+    qq = '2477153650'
  
     start_urls = [
-        "http://bj.lianjia.com/ershoufang/"
+        "https://user.qzone.qq.com/" + qq + '/',
     ]
  
-    rules = [
-        # 匹配正则表达式,处理下一页
-        Rule(LinkExtractor(allow=(r'http://bj.lianjia.com/ershoufang/pg\s+$',)), callback='parse_item'),
+
  
-        # 匹配正则表达式,结果加到url列表中,设置请求预处理函数
-        # Rule(FangLinkExtractor(allow=('http://www.lianjia.com/client/', )), follow=True, process_request='add_cookie')
-    ]
- 
-    def parse_item(self, response):
-        # 这里与之前的parse方法一样，处理
-        # hxs = HtmlXPathSelector(response)
-        pass
+    def parse(self, response):
+        print("-"*80)
+        mainPage = {"main":"主页","1":"资料","2":"日志","3":"访客","4":"相册","311":"说说","334":"留言板"}
+        html = response.body
+        # print("html = ",html)
+
+        print('-'*80)
 
 
 
@@ -135,15 +137,17 @@ class TianqiSpider(CrawlSpider):
 def get_from_li(liString):
     pass
 
-
+citylist = []
 
 class JiadingTianqiSpider(CrawlSpider):
+
     name = "JiadingTianqi"
     
     allowed_domains = ["lishi.tianqi.com"]
  
     start_urls = [
-        "http://lishi.tianqi.com/jiading/index.html"
+        "http://lishi.tianqi.com/jiading/index.html",
+        'http://lishi.tianqi.com/songjiang/index.html',
     ]
     
     # rules = [
