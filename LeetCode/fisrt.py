@@ -244,42 +244,94 @@ class Solution(object):
                             ret.append(aslice)
         return ret 
 
-    #判断一个字符串是不是合法的输入
+    #LeetCode 20 : 判断一个字符串是不是合法的输入 2.8%
     def isValid(self, s):
         """
         :type s: str
         :rtype: bool
         """
-        valid = ['(',')','[',']','{','}']
-        length = len(valid)
-        for i in range(int(length/2)):
-            start = s.find(valid[2*i])
-            end = s.find(valid[2*i+1])
-            if start < 0:                
-                if end > -1:
-                    return False
-                else:
-                    continue
-            else:
-                if end < 0:
-                    return False
-                else:
-                    pice = s[start+1:end]
-                    return self.isValid(pice)
-
-                    if end - start == 1:
-                        s = s[:start] + s[end+1:]
+        valid = ['()','[]','{}']
+        count = 0
+        for c in valid:
+            if c in s:
+                count = count + 1
+                cindex = s.index(c)
+                start = cindex
+                end = start + 2
+                s = s[:start] + s[end:]
+                print("c = ",c,"cindex = ",cindex,"s = ",s)
+                if len(s) == 2:
+                    if s in valid:
+                        return True
                     else:
-                        s = s[:start] + s[start+1:end] + s[end+1:]
-                    # print("s = ",s)
-                    return self.isValid(s)
-        return True
+                        return False
+                if len(s) == 0:
+                    return True
+        if count < 1:
+            return False
+        else:
+            return self.isValid(s)
 
+    # LeetCode 20 : 4.58%
+    def isValid2(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        v1 = '[]'
+        v2 = '()'
+        v3 = '{}'
+        v = [v1,v2,v3]
+        flag = False
+        if v1 in s:
+            cindex = s.index(v1)
+            start = cindex
+            end = start + 2
+            s = s[:start] + s[end:]
+            flag = True
 
+        if v2 in s:
+            cindex = s.index(v2)
+            start = cindex
+            end = start + 2
+            s = s[:start] + s[end:]
+            flag = True
 
+        if v3 in s:
+            cindex = s.index(v3)
+            start = cindex
+            end = start + 2
+            s = s[:start] + s[end:]
+            flag = True
+        
+        if not flag:
+            return flag
+
+        if len(s) == 0:
+            return True
+        elif len(s) == 2:
+            if s in v:
+                return True
+            else:
+                return False
+        elif len(s) == 1:
+            return False
+        else:
+            return self.isValid2(s)
+
+    # LeetCode 22: 给定个数，产生合法的括号字符串
+    def generateParenthesis(self, n):
+        """
+        :type n: int
+        :rtype: List[str]
+        """
+        c1 = '('
+        c2 = ')'
+        c = [c1,c2]
+        ret = []
+        
 # s = 'abccbajjklss'
 solution = Solution()
-# print(solution.helpPermutations(3,[[2,1],[1,2]]))
-sp = ''
-s = solution.isValid("(([]){})")
+
+s = solution.isValid2("()")
 print("s = ",s)
